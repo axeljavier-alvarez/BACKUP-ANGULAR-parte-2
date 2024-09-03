@@ -48,7 +48,7 @@ export class EjemploComponent implements OnInit {
   getProductos(){
     // AA mandar a llamar al token
     // BB cada vez que ingrese al controlador refrescara el token
-    this._productoService.obtenerProductos(this.token).subscribe(
+    this._productoService.obtenerProductos(this._usuarioService.obtenerToken()).subscribe(
       (response)=>{
         this.productosModelGet = response.productos;
         console.log(this.productosModelGet);
@@ -61,7 +61,7 @@ export class EjemploComponent implements OnInit {
   // 6. AGREGAR PRODUCTOS
   postProductos(){
     // variable para agregar
-    this._productoService.agregarProducto(this.productosModelPost).subscribe(
+    this._productoService.agregarProducto(this.productosModelPost, this._usuarioService.obtenerToken()).subscribe(
       (response)=>{
         console.log(response);
         this.getProductos();
@@ -74,7 +74,7 @@ export class EjemploComponent implements OnInit {
 
   // ELIMINAR PRODUCTOS, supuestamente la variable idProducto no existe, no se
   deleteProductos(idProducto){
-    this._productoService.eliminarProducto(idProducto).subscribe(
+    this._productoService.eliminarProducto(idProducto, this.token).subscribe(
       (response)=>{
         console.log(response);
 

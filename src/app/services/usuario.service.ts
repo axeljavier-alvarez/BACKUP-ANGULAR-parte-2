@@ -33,7 +33,8 @@ export class UsuarioService {
     if(token2 != undefined){
       this.token = token2;
     } else {
-      this.token = null;
+      // vaciar token
+      this.token = '';
     }
 
     return this.token;

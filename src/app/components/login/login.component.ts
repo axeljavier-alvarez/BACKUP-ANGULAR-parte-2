@@ -63,26 +63,89 @@ export class LoginComponent implements OnInit {
     );
   }
 
+
+  // GET TOKEN PROMESA
+  getTokenPromesa(): Promise<any>{
+    return new Promise((resolve, reject)=>{
+      this._usuariosService.login(this.usuarioModel, "true").subscribe(
+        (response)=>{
+          // console.log(response);
+          localStorage.setItem("token", response.token)
+          resolve(response);
+        },
+        (error)=>{
+          console.log(<any>error);
+
+        }
+      )
+    })
+  }
+
   //5. login para que me traiga el token y los datos del usuario en cualquier barra de navegación,
   // esta es la función final
   login(){
-
-    this._usuariosService.login(this.usuarioModel).subscribe(
+    this._usuariosService.login(this.usuarioModel, "false").subscribe(
       (response)=>{
-        // 7. datos del token
-        this.getToken();
-        // 8. almacenar los datos del usuario
-        localStorage.setItem("identidad", JSON.stringify(response.usuario))
-        console.log(response);
 
+        // TIRA LA RESPUESTA
+        this.getTokenPromesa().then(respuesta=>{
+          localStorage.setItem("identidad", JSON.stringify(response.usuario))
 
-        this._router.navigate(['/ejemplo']);
+          this._router.navigate(['/ejemplo']);
+        })
 
       },
+
       (error)=>{
         console.log(<any>error);
       }
     )
   }
 
+
+  /* login con alertas
+   login(){
+    this._usuariosServices.login(this.usuariosModel, "false").subscribe(
+      (response)=>{
+
+        this.getTokenPromesa().then(respuesta=>{
+
+          console.log(response);
+          localStorage.setItem("identidad", JSON.stringify(response.Usuario))
+
+          if (this._usuariosServices.obtenerIdentidad().rol === 'ROL_ADMIN') {
+            this._router.navigate(['/admin/vistaadmin']);
+
+          } else if (this._usuariosServices.obtenerIdentidad().rol === 'ROL_DOCTOR') {
+            this._router.navigate(['/doctor/vistadoctor']);
+
+          } else if (this._usuariosServices.obtenerIdentidad().rol === 'ROL_USUARIO') {
+            this._router.navigate(['/usuario/vistausuario']);
+          }
+
+        })
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Bienvenido',
+          text: 'Logueado exitosamente',
+          showConfirmButton: false,
+          timer: 1500
+
+        })
+      },
+
+      (error)=>{
+        console.log(<any>error);
+        Swal.fire({
+          icon: 'error',
+          title: error.error.mensaje,
+          footer: '*Ingrese los datos de nuevo*',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    )
+  }
+    */
 }

@@ -15,6 +15,10 @@ export class ProductosService {
   // 4. HTTP headers para definir que cabeceras voy a usar se utiliza comúnmente en aplicaciones Angular para configurar los encabezados de una solicitud HTTP
   public headersVariable = new HttpHeaders().set('Content-Type', 'application/json');
 
+
+  public identidad;
+  public token;
+
  // 2. Constructor del http cliente
   constructor(public _http: HttpClient) { }
 
@@ -29,7 +33,7 @@ export class ProductosService {
 
 
   // 5. Agregar producto e importarlo
-  agregarProducto(modeloProducto: Producto): Observable<any> {
+  agregarProducto(modeloProducto: Producto, token): Observable<any> {
     // convertir el modelo producto a string que sea entendido
     let parametros = JSON.stringify(modeloProducto);
     // enviar las cabeceras
@@ -37,8 +41,15 @@ export class ProductosService {
 
   }
 
-  eliminarProducto(id: String): Observable<any>{
-    return this._http.delete(this.url + '/eliminarProducto/' + id, {headers: this.headersVariable});
+
+
+
+  eliminarProducto( idProducto, token ): Observable<any> {
+
+    let headersToken = this.headersVariable.set('Authorization', token );
+
+    return this._http.delete(this.url + '/eliminarProducto/' +  idProducto, { headers: headersToken});
+
   }
- 
+
 }
