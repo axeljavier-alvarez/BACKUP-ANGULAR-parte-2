@@ -38,8 +38,14 @@
         </div>
         <div class="card-footer text-body-secondary">
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-success">Editar</button>
+            <button type="button" class="btn btn-warning" data-bs-toggle="offcanvas" data-bs-target="#editarProductoApp"
+            aria-controls="offcanvasExample" (click)="getProductoId(prod._id)">
+              Editar
+            </button>
             <button type="button" class="btn btn-danger" (click)="deleteProductos(prod._id)">Eliminar</button>
+
+            <button type="button" class="btn btn-success" [routerLink]="['/verProducto', prod._id]">Ver productos</button>
+
           </div>
         </div>
       </div>
@@ -121,5 +127,55 @@
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="postProductos()">Agregar</button>
       </div>
     </div>
+  </div>
+</div>
+
+
+
+ <!--Editar-->
+
+ <div class="offcanvas offcanvas-start" tabindex="-1" id="editarProductoApp" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Editar Productos</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form>
+
+      <div class="mb-3">
+        <label for="editarNombre" class="form-label">Nombre Producto</label>
+        <input type="text" class="form-control" id="editarNombre"
+         autocomplete="off" name="nombre" #nombre="ngModel" [(ngModel)]="productoModelGetId.nombre">
+
+      </div>
+
+
+      <div class="mb-3">
+        <label for="inputCantidad" class="form-label">Cantidad Producto</label>
+        <input type="number" class="form-control" id="inputCantidad"
+         autocomplete="off" name="cantidad" #cantidad="ngModel" [(ngModel)]="productoModelGetId.cantidad">
+
+      </div>
+
+      <div class="mb-3">
+        <label for="inputVendido" class="form-label">Vendido producto</label>
+        <input type="number" class="form-control" id="inputVendido"
+         autocomplete="off"  name="vendido" #vendido="ngModel" [(ngModel)]="productoModelGetId.vendido">
+
+      </div>
+
+      <div class="mb-3">
+        <label for="inputPrecio" class="form-label">Precio Producto</label>
+        <input type="number" class="form-control" id="inputPrecio"
+         autocomplete="off" name="precio" #precio="ngModel" [(ngModel)]="productoModelGetId.precio">
+      </div>
+
+
+          <br>
+
+          <button class="btn btn-success" data-bs-dismiss="offcanvas" (click)="putProducto()">Editar Empresas</button>
+
+
+    </form>
   </div>
 </div>

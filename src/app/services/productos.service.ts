@@ -52,4 +52,16 @@ export class ProductosService {
 
   }
 
+
+  /* ruta activated */
+
+  obtenerProductoId(id: String): Observable<any> {
+    return this._http.get(this.url + '/productos/' + id, { headers: this.headersVariable})
+  }  
+
+  editarProducto(modeloProducto: Producto): Observable<any>{
+    let parametros = JSON.stringify(modeloProducto);
+    return this._http.put(this.url + '/editarProductos/' + modeloProducto._id, parametros, { headers: this.headersVariable});
+
+  }
 }

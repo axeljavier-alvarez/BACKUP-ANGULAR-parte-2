@@ -29,6 +29,8 @@ export class EjemploComponent implements OnInit {
   // 5. Model post para agregarlo
   public productosModelPost: Producto;
   // 2. PONER EL CONSTRUCTOR CON EL SERVICIO
+
+  public productoModelGetId: Producto;
   constructor(
     private _productoService: ProductosService,
     private titleService: Title,
@@ -38,6 +40,8 @@ export class EjemploComponent implements OnInit {
     this.titleService.setTitle('Ejemplo'); // Establece el título de la pestaña
     // lo el agregar :) para que se cumpla lo que estoy mandando
     this.productosModelPost = new Producto('', '', 0, 0, 0);
+    this.productoModelGetId = new Producto('', '', 0, 0, 0);
+
     this.token = this._usuarioService.obtenerToken();
   }
   // 4. PARA QUE MUESTRE EL ARRAY
@@ -86,4 +90,29 @@ export class EjemploComponent implements OnInit {
     )
   }
 
+  getProductoId(idProducto){
+    this._productoService.obtenerProductoId(idProducto).subscribe(
+      (response)=>{
+
+        this.productoModelGetId = response.producto;
+        console.log(response);
+      },
+      (error)=>{
+
+      }
+    )
+  }
+
+  putProducto(){
+    this._productoService.editarProducto(this.productoModelGetId).subscribe(
+      (response)=>{
+
+        console.log(response);
+        this.getProductos();
+      },
+      (error)=>{
+
+      }
+    )
+  }
 }

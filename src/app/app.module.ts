@@ -10,6 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { EjemploComponent } from './components/ejemplo/ejemplo.component';
+import { VerProductoComponent } from './components/ver-producto/ver-producto.component';
 
 
 
@@ -19,13 +20,15 @@ import { EjemploComponent } from './components/ejemplo/ejemplo.component';
     LoginComponent,
     RegistroComponent,
     NavbarComponent,
-    EjemploComponent
+    EjemploComponent,
+    VerProductoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    // ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
